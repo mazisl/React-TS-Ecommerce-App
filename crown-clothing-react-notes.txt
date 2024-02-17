@@ -1,0 +1,40 @@
+//React router steps:
+
+first install via npm:
+- npm i react-router
+- npm i react-router-dom
+
+on main.tsx file:
+
+import {BrowserRouter} from 'react-router-dom';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
+)
+
+//on other files where react router is to be implemented:
+
+import {Routes, Route} from 'react-router-dom'
+
+import Home from './routes/home/home.component'
+
+const App = () => {
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home />}/>
+    </Routes>
+  )
+}
+
+export default App
+
+//to import svg images as components in react with vite
+refer to the bookmark in dev docs: https://www.npmjs.com/package/vite-plugin-svgr
+
+//the authentication inside firebase is a separate service from firestore database
+//that's why why need to manually create a system to store the authenticated user details in firestore database
