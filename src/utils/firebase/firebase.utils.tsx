@@ -7,8 +7,13 @@ import {
   signInWithPopup, 
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from "firebase/auth";
+//observable listener is a way for us to hook into some kind events
+//whether they are sign-in or sign-out events we are able to trigger something based on these changes
+//we are using onAuthStateChanged as observable listener
 
 //doc is used to create a document instance
 //getDoc is used to access that doc's data
@@ -82,3 +87,8 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 }
+
+//auth also keeps track of which users are signed in now
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)

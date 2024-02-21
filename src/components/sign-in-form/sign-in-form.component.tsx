@@ -2,6 +2,8 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
+// import { UserContext } from "../../contexts/user.context";
+
 import './sign-in-form.styles.scss';
 
 import { 
@@ -15,12 +17,18 @@ const defaultFormFields = {
   password: ''
 }
 
+//to use context in this component we:
+//1. import useContext hook
+//2. import UserContext from contexts
+//this UserContext will give us back whatever value we passed in for it's value
+//to utilize the useContext hook and the value from UserContext we set the value as in line 31 i.e. const {setCurrentUser} = useContext(UserContext);
+
 const SignInForm = () => {
 
   const [formFields, setFormFields] = useState(defaultFormFields);
   const {email, password} = formFields;
 
-  console.log(formFields);
+  // const {setCurrentUser} = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -28,16 +36,19 @@ const SignInForm = () => {
 
   const signInWithGoogle = async () => {
     //user is destructured from response
-    const {user} = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log(response);
+      const {user} = await signInAuthUserWithEmailAndPassword(
+        email, 
+        password
+      );
+      // setCurrentUser(user);
+
       resetFormFields();
 
     } catch(error) {
